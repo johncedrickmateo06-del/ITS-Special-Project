@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+        display: flex;
+        background: #f4f4f4;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+        width: 240px;
+        height: 100vh;
+        background: #0d0d6b;
+        color: #fff;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .sidebar h2 {
+        font-size: 28px;
+        margin-bottom: 5px;
+    }
+
+    .sidebar p {
+        font-size: 12px;
+        margin-bottom: 20px;
+    }
+
+    .menu {
+        list-style: none;
+    }
+
+.menu li a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    width: 100%;
+}
+.menu li:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+    .bottom {
+        font-size: 12px;
+    }
+
+    .logout {
+        margin-top: 10px;
+        cursor: pointer;
+        color: #ccc;
+    }
+
+    /* MAIN CONTENT */
+    .main {
+        flex: 1;
+        padding: 30px;
+    }
+
+    .main h1 {
+        color: #1a1a8f;
+        margin-bottom: 20px;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .card {
+        background: #eaeaea;
+        border-radius: 10px;
+        padding: 15px;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .card h3 {
+        font-size: 14px;
+        color: #333;
+    }
+    .card p {
+    font-size: 13px;
+    color: #444;
+    margin: 3px 0;
+    }
+    .btn {
+        align-self: flex-end;
+        padding: 5px 12px;
+        background: #0d0d6b;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 12px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background: #05054a;
+    }
+    .active {
+    background: rgba(255,255,255,0.2);
+    }
+
+    @media (max-width: 900px) {
+        .cards {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .cards {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <div>
+        <h2>ITD</h2>
+        <p>Asset & Operations Monitoring System</p>
+
+    <ul class="menu">
+        <li><a href="dashboard.html">Home</a></li> <br>
+        <li><a href="network.html">Network Monitoring</a></li> <br>
+        <li><a href="systems.html">Systems Monitoring</a></li> <br>
+        <li><a href="services.html">Services Monitoring</a></li> <br>
+        <li><a href="database.html">Database Monitoring</a></li> <br>
+        <li><a href="server.html">Server Monitoring</a></li> <br>
+        <li><a href="assets.html">Asset Manager</a></li> <br>
+    </ul>
+    </div>
+
+    <div class="bottom">
+        <div>Signed in as</div>
+        <strong>Gerald Balbon</strong>
+        <div class="logout" onclick="window.location.href='front.html'">⎋ Log out</div>
+    </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+    <h1>Home</h1>
+
+    <div class="cards">
+
+    <div class="card">
+        <h3>Network</h3>
+        <p>Systems Down: <strong id="network-down">3</strong></p>
+        <button class="btn" onclick="window.location.href='network.html'">View</button>
+    </div>
+
+    <div class="card">
+        <h3>Systems</h3>
+        <p>Systems Down: <strong id="systems-down">2</strong></p>
+        <button class="btn" onclick="window.location.href='systems.html'">View</button>
+    </div>
+
+    <div class="card">
+        <h3>Services</h3>
+        <p>Pending Requests: <strong id="services-pending">5</strong></p>
+        <button class="btn" onclick="window.location.href='services.html'">View</button>
+    </div>
+
+    <div class="card">
+        <h3>Databases</h3>
+        <p>Last Backup: <strong id="db-backup">March 30, 2026</strong></p>
+        <button class="btn" onclick="window.location.href='database.html'">View</button>
+    </div>
+
+    <div class="card">
+        <h3>Servers</h3>
+        <p>CPU Temp: <strong id="server-cpu">65°C</strong></p>
+        <p>Memory Usage: <strong id="server-memory">70%</strong></p>
+        <p>Status: <strong id="server-status">5 Up / 1 Down</strong></p>
+        <button class="btn" onclick="window.location.href='server.html'">View</button>
+    </div>
+
+</div>
+</div>
+
+</body>
+</html>

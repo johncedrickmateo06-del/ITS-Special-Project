@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Database Monitoring</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #f4f4f4;
+    padding: 20px;
+}
+
+h1, h2 {
+    color: #0d0d6b;
+}
+
+.section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+/* CARD */
+.card {
+    background: #eaeaea;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* STATUS */
+.online { color: green; font-weight: bold; }
+.offline { color: red; font-weight: bold; }
+
+/* PROGRESS BAR */
+.progress {
+    background: #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 15px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: green;
+    width: 70%;
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: center;
+}
+
+th {
+    background: #0d0d6b;
+    color: white;
+}
+
+/* ALERT */
+.alert {
+    color: red;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Database Monitoring</h1>
+
+<!-- 🟢 SYSTEM STATUS -->
+<div class="section">
+<h2>System Status Dashboard</h2>
+
+<div class="grid">
+    <div class="card">
+        <h3>Attendance</h3>
+        <p class="online">Online</p>
+    </div>
+
+    <div class="card">
+        <h3>Payroll</h3>
+        <p class="offline">Offline</p>
+    </div>
+
+    <div class="card">
+        <h3>Inventory</h3>
+        <p class="online">Online</p>
+    </div>
+</div>
+</div>
+
+
+<!-- 💾 BACKUP MONITOR -->
+<div class="section">
+<h2>Backup Monitoring Panel</h2>
+
+<p>Last Backup: <strong id="lastBackup">March 30, 2026 10:00 PM</strong></p>
+<p>Next Backup: <strong>April 1, 2026 10:00 PM</strong></p>
+<p>Status: <span id="backupStatus" class="online">Success</span></p>
+
+<div class="progress">
+    <div class="progress-bar" id="backupBar"></div>
+</div>
+
+<p id="backupAlert" class="alert"></p>
+</div>
+
+
+<!-- 👥 ACCESS CONTROL -->
+<div class="section">
+<h2>Access Control View</h2>
+
+<table>
+<tr>
+    <th>System</th>
+    <th>User</th>
+    <th>Role</th>
+</tr>
+
+<tr>
+    <td>Payroll</td>
+    <td>Admin</td>
+    <td>Full Access</td>
+</tr>
+
+<tr>
+    <td>Attendance</td>
+    <td>Staff</td>
+    <td>Read Only</td>
+</tr>
+</table>
+</div>
+
+
+<!-- 🌐 IP CHECK -->
+<div class="section">
+<h2>IP & Connectivity Checker</h2>
+
+<table>
+<tr>
+    <th>System</th>
+    <th>IP</th>
+    <th>Latency (ms)</th>
+    <th>Status</th>
+</tr>
+
+<tr>
+    <td>Payroll</td>
+    <td>192.168.1.10</td>
+    <td id="lat1">--</td>
+    <td id="stat1">Checking...</td>
+</tr>
+
+<tr>
+    <td>Attendance</td>
+    <td>192.168.1.11</td>
+    <td id="lat2">--</td>
+    <td id="stat2">Checking...</td>
+</tr>
+
+</table>
+</div>
+
+
+<script>
+// 🔁 SIMULATED CONNECTIVITY CHECK
+function checkConnectivity() {
+    let latency1 = Math.floor(Math.random() * 100);
+    let latency2 = Math.floor(Math.random() * 100);
+
+    document.getElementById("lat1").innerText = latency1;
+    document.getElementById("lat2").innerText = latency2;
+
+    document.getElementById("stat1").innerText =
+        latency1 > 80 ? "Unreachable" : "Online";
+
+    document.getElementById("stat2").innerText =
+        latency2 > 80 ? "Unreachable" : "Online";
+}
+
+// 🔁 BACKUP ALERT
+function checkBackup() {
+    let success = Math.random() > 0.3;
+
+    if (!success) {
+        document.getElementById("backupStatus").innerText = "Failed";
+        document.getElementById("backupStatus").className = "offline";
+        document.getElementById("backupAlert").innerText = "⚠ Backup Failed!";
+    }
+}
+
+// RUN
+checkConnectivity();
+checkBackup();
+</script>
+
+</body>
+</html>

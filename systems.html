@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Systems Uptime Monitoring</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #f4f4f4;
+    padding: 20px;
+}
+
+h1, h2 {
+    color: #0d0d6b;
+}
+
+.section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    overflow-x: auto;
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: center;
+}
+
+th {
+    background: #0d0d6b;
+    color: white;
+}
+
+/* STATUS COLORS */
+.up { background: #28a745; color: #fff; }
+.down { background: #dc3545; color: #fff; }
+.partial { background: #ffc107; }
+
+/* INPUT */
+select, input {
+    width: 100%;
+    padding: 4px;
+}
+
+/* BUTTON */
+.btn {
+    margin-top: 10px;
+    padding: 8px 15px;
+    background: #0d0d6b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Systems Uptime Monitoring</h1>
+
+<!-- 🟢 DAILY LOG -->
+<div class="section">
+<h2>Daily Uptime Log</h2>
+
+<table>
+<tr>
+    <th>Date</th>
+    <th>Day</th>
+    <th>comsv2</th>
+    <th>de</th>
+    <th>depdms</th>
+    <th>doe</th>
+    <th>ertls</th>
+    <th>gea</th>
+    <th>gemp</th>
+    <th>hrips</th>
+    <th>pelp</th>
+    <th>legacy</th>
+    <th>nedr</th>
+    <th>vfelp</th>
+    <th># UP</th>
+    <th># DOWN</th>
+    <th>Uptime %</th>
+</tr>
+
+<tr>
+    <td><input type="date" id="date"></td>
+    <td><input type="text" id="day"></td>
+
+    <!-- STATUS DROPDOWNS -->
+    <td><select class="status"><option>UP</option><option>DOWN</option><option>PARTIAL</option></select></td>
+    <td><select class="status"></select></td>
+    <td><select class="status"></select></td>
+    <td><select class="status"></select></td>
+    <td><select class="status"></select></td>
+    <td><select class="status"></select></td>
+    <td><select class="status"></select></td>
+    <td><select class="status"></select></td>
+    <td><select class="status"></select></td>
+    <td><select class="status"></select></td>
+    <td><select class="status"></select></td>
+    <td><select class="status"></select></td>
+
+    <td id="upCount">0</td>
+    <td id="downCount">0</td>
+    <td id="uptimePercent">0%</td>
+</tr>
+</table>
+
+<button class="btn" onclick="computeUptime()">Compute</button>
+</div>
+
+
+<!-- 📊 MONTHLY BREAKDOWN -->
+<div class="section">
+<h2>Monthly Uptime Breakdown</h2>
+
+<table>
+<tr>
+    <th>Month</th>
+    <th>Days Monitored</th>
+    <th>comsv2</th>
+    <th>de</th>
+    <th>depdms</th>
+    <th>doe</th>
+    <th>...</th>
+    <th>Total DOWN Days</th>
+</tr>
+
+<tr>
+    <td><input type="month"></td>
+    <td><input type="number"></td>
+    <td><input type="number" placeholder="UP days"></td>
+    <td><input type="number"></td>
+    <td><input type="number"></td>
+    <td><input type="number"></td>
+    <td>...</td>
+    <td><input type="number"></td>
+</tr>
+</table>
+</div>
+
+
+<!-- 📈 MONITORING REPORT -->
+<div class="section">
+<h2>Monitoring Status Report</h2>
+
+<table>
+<tr>
+    <th>Service</th>
+    <th>Uptime %</th>
+    <th>Downtime %</th>
+    <th>Uptime (hrs)</th>
+    <th>Downtime (hrs)</th>
+    <th>Uptime (min)</th>
+    <th>Downtime (min)</th>
+</tr>
+
+<tr>
+    <td>doe.gov.ph</td>
+    <td><input type="number"></td>
+    <td><input type="number"></td>
+    <td><input type="number"></td>
+    <td><input type="number"></td>
+    <td><input type="number"></td>
+    <td><input type="number"></td>
+</tr>
+
+<tr>
+    <td><strong>AVERAGE / TOTAL</strong></td>
+    <td colspan="6"></td>
+</tr>
+
+</table>
+</div>
+
+
+<script>
+function computeUptime() {
+    const statuses = document.querySelectorAll(".status");
+    let up = 0;
+    let down = 0;
+
+    statuses.forEach(s => {
+        if (s.value === "UP") up++;
+        if (s.value === "DOWN") down++;
+    });
+
+    const total = statuses.length;
+    const percent = ((up / total) * 100).toFixed(2);
+
+    document.getElementById("upCount").innerText = up;
+    document.getElementById("downCount").innerText = down;
+    document.getElementById("uptimePercent").innerText = percent + "%";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Asset Manager</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #f4f4f4;
+    padding: 20px;
+}
+
+h1, h2 {
+    color: #0d0d6b;
+}
+
+/* SUMMARY CARDS */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: #eaeaea;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* SECTION */
+.section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* FILTERS */
+.filters {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+select {
+    padding: 6px;
+    width: 100%;
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background: #0d0d6b;
+    color: white;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Asset Manager</h1>
+
+<!-- 📊 SUMMARY -->
+<div class="cards">
+    <div class="card">
+        <h3>Routers</h3>
+        <p id="routerCount">0</p>
+    </div>
+
+    <div class="card">
+        <h3>Switches</h3>
+        <p id="switchCount">0</p>
+    </div>
+
+    <div class="card">
+        <h3>Firewalls</h3>
+        <p id="firewallCount">0</p>
+    </div>
+
+    <div class="card">
+        <h3>Access Points</h3>
+        <p id="apCount">0</p>
+    </div>
+</div>
+
+
+<!-- 🔍 FILTER + TABLE -->
+<div class="section">
+
+<h2>Asset Inventory</h2>
+
+<div class="filters">
+    <select id="filterLocation" onchange="filterAssets()">
+        <option value="">All Locations</option>
+        <option>HQ</option>
+        <option>Branch</option>
+    </select>
+
+    <select id="filterVLAN" onchange="filterAssets()">
+        <option value="">All VLAN</option>
+        <option>VLAN 10</option>
+        <option>VLAN 20</option>
+    </select>
+
+    <select id="filterType" onchange="filterAssets()">
+        <option value="">All Devices</option>
+        <option>Router</option>
+        <option>Switch</option>
+        <option>Firewall</option>
+        <option>Access Point</option>
+    </select>
+</div>
+
+
+<table id="assetTable">
+<tr>
+    <th>Device Name</th>
+    <th>Type</th>
+    <th>Location</th>
+    <th>VLAN</th>
+</tr>
+</table>
+
+</div>
+
+
+<script>
+// SAMPLE DATA (replace with backend later)
+let assets = [
+    {name: "Router-1", type: "Router", location: "HQ", vlan: "VLAN 10"},
+    {name: "Switch-1", type: "Switch", location: "HQ", vlan: "VLAN 20"},
+    {name: "Firewall-1", type: "Firewall", location: "Branch", vlan: "VLAN 10"},
+    {name: "AP-1", type: "Access Point", location: "HQ", vlan: "VLAN 20"},
+];
+
+function renderTable(data) {
+    const table = document.getElementById("assetTable");
+    table.innerHTML = `
+        <tr>
+            <th>Device Name</th>
+            <th>Type</th>
+            <th>Location</th>
+            <th>VLAN</th>
+        </tr>
+    `;
+
+    data.forEach(a => {
+        let row = table.insertRow();
+        row.innerHTML = `
+            <td>${a.name}</td>
+            <td>${a.type}</td>
+            <td>${a.location}</td>
+            <td>${a.vlan}</td>
+        `;
+    });
+
+    updateCounts(data);
+}
+
+function updateCounts(data) {
+    document.getElementById("routerCount").innerText =
+        data.filter(a => a.type === "Router").length;
+
+    document.getElementById("switchCount").innerText =
+        data.filter(a => a.type === "Switch").length;
+
+    document.getElementById("firewallCount").innerText =
+        data.filter(a => a.type === "Firewall").length;
+
+    document.getElementById("apCount").innerText =
+        data.filter(a => a.type === "Access Point").length;
+}
+
+function filterAssets() {
+    let loc = document.getElementById("filterLocation").value;
+    let vlan = document.getElementById("filterVLAN").value;
+    let type = document.getElementById("filterType").value;
+
+    let filtered = assets.filter(a =>
+        (loc === "" || a.location === loc) &&
+        (vlan === "" || a.vlan === vlan) &&
+        (type === "" || a.type === type)
+    );
+
+    renderTable(filtered);
+}
+
+// INIT
+renderTable(assets);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Network Monitoring</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #f4f4f4;
+    padding: 20px;
+}
+
+h2 {
+    color: #0d0d6b;
+    margin-top: 30px;
+}
+
+.section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.btn {
+    background: #0d0d6b;
+    color: #fff;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Network Monitoring</h1>
+
+<!-- 🔥 FIREWALL LOGS -->
+<div class="section">
+    <h2>Actioned Firewall Logs</h2>
+
+    <div class="row">
+        <input type="date" id="fw-date">
+        <input type="time" id="fw-time">
+    </div>
+
+    <input type="text" placeholder="Incident" id="fw-incident">
+    <input type="text" placeholder="Incident No." id="fw-number">
+    <input type="text" placeholder="Action" id="fw-action">
+    <input type="text" placeholder="Remarks" id="fw-remarks">
+    <input type="text" placeholder="Country" id="fw-country">
+    <input type="file" id="fw-image">
+
+    <button class="btn" onclick="saveFirewall()">Save Log</button>
+</div>
+
+
+<!-- 📶 WIFI SPEED TEST -->
+<div class="section">
+    <h2>Wi-Fi Speed Tests</h2>
+
+    <h3>Location Info</h3>
+    <input type="text" placeholder="Location">
+    <input type="text" placeholder="Building / Floor">
+
+    <div class="row">
+        <input type="date">
+        <input type="time">
+    </div>
+
+    <h3>DOE Wi-Fi</h3>
+    <div class="row">
+        <input type="number" placeholder="Laptop Download">
+        <input type="number" placeholder="Laptop Upload">
+    </div>
+    <input type="number" placeholder="Devices Connected">
+
+    <div class="row">
+        <input type="number" placeholder="Phone Download">
+        <input type="number" placeholder="Phone Upload">
+    </div>
+
+    <h3>Other Connections</h3>
+    <div class="row">
+        <input type="number" placeholder="Fixed Wireless Download">
+        <input type="number" placeholder="Fixed Wireless Upload">
+    </div>
+
+    <div class="row">
+        <input type="number" placeholder="Converge Download">
+        <input type="number" placeholder="Converge Upload">
+    </div>
+
+    <div class="row">
+        <input type="number" placeholder="LAN Download">
+        <input type="number" placeholder="LAN Upload">
+    </div>
+
+    <button class="btn">Save Speed Test</button>
+</div>
+
+
+<!-- 🛠️ PREVENTIVE MAINTENANCE -->
+<div class="section">
+    <h2>Preventive Maintenance Checklist</h2>
+
+    <h3>Server Room</h3>
+    <label><input type="checkbox"> Temperature Normal</label><br>
+    <label><input type="checkbox"> No Dust</label><br>
+    <label><input type="checkbox"> Power Stable</label>
+
+    <h3>Network Devices</h3>
+    <label><input type="checkbox"> Switches Working</label><br>
+    <label><input type="checkbox"> Firewall Active</label>
+
+    <h3>Monitoring Room</h3>
+    <label><input type="checkbox"> Screens Operational</label><br>
+    <label><input type="checkbox"> Logs Checked</label>
+
+    <br><br>
+    <button class="btn">Submit Checklist</button>
+</div>
+
+
+<!-- 💾 SIMPLE JS -->
+<script>
+function saveFirewall() {
+    const data = {
+        date: document.getElementById("fw-date").value,
+        time: document.getElementById("fw-time").value,
+        incident: document.getElementById("fw-incident").value,
+        number: document.getElementById("fw-number").value,
+        action: document.getElementById("fw-action").value,
+        remarks: document.getElementById("fw-remarks").value,
+        country: document.getElementById("fw-country").value
+    };
+
+    console.log("Saved Firewall Log:", data);
+    alert("Firewall log saved!");
+}
+</script>
+
+</body>
+</html>

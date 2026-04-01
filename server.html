@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Server Monitoring</title>
+<style>
+body {
+    font-family: Arial;
+    margin: 0;
+    background: #f4f4f4;
+}
+
+.header {
+    background: #0d0d6b;
+    color: white;
+    padding: 15px 20px;
+    font-size: 20px;
+}
+
+.container {
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.metric {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.back {
+    margin-bottom: 15px;
+    display: inline-block;
+    cursor: pointer;
+    color: #0d0d6b;
+}
+</style>
+</head>
+<body>
+
+<div class="header">Server Monitoring</div>
+
+<div class="container">
+
+<div class="back" onclick="window.location.href='dashboard.html'">← Back</div>
+
+<div class="card">
+    <strong>Server 1</strong>
+    <div class="metric">🌡 Temperature: 45°C</div>
+    <div class="metric">⚙ CPU Usage: 65%</div>
+</div>
+
+<div class="card">
+    <strong>Server 2</strong>
+    <div class="metric">🌡 Temperature: 52°C</div>
+    <div class="metric">⚙ CPU Usage: 80%</div>
+</div>
+
+</div>
+
+</body>
+</html>

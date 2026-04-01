@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Services Monitoring</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #f4f4f4;
+    padding: 20px;
+}
+
+h1, h2 {
+    color: #0d0d6b;
+}
+
+/* SECTION */
+.section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* BUTTON */
+.btn {
+    background: #0d0d6b;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #05054a;
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background: #0d0d6b;
+    color: white;
+}
+
+/* STATUS COLORS */
+.pending { background: orange; color: white; }
+.ongoing { background: #007bff; color: white; }
+.completed { background: green; color: white; }
+
+/* PRIORITY */
+.low { color: green; }
+.normal { color: #333; }
+.high { color: red; font-weight: bold; }
+
+/* FORM */
+input, select {
+    width: 100%;
+    padding: 6px;
+    margin-bottom: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Services Monitoring</h1>
+
+<!-- ➕ ADD RECORD -->
+<div class="section">
+<h2>Add Service Request</h2>
+
+<input type="text" id="serviceName" placeholder="Service Type (ICT / Account / Upload)">
+<input type="text" id="description" placeholder="Description">
+<input type="datetime-local" id="datetime">
+
+<select id="status">
+    <option>Pending</option>
+    <option>Ongoing</option>
+    <option>Completed</option>
+</select>
+
+<select id="priority">
+    <option>Low</option>
+    <option>Normal</option>
+    <option>High</option>
+</select>
+
+<button class="btn" onclick="addRecord()">Add Record</button>
+</div>
+
+
+<!-- 📋 TICKETING SYSTEM -->
+<div class="section">
+<h2>Service Request Tracking</h2>
+
+<table id="ticketTable">
+<tr>
+    <th>Service</th>
+    <th>Description</th>
+    <th>Date</th>
+    <th>Status</th>
+    <th>Priority</th>
+</tr>
+</table>
+</div>
+
+
+<!-- 📊 ANALYTICS -->
+<div class="section">
+<h2>Service Usage Analytics</h2>
+
+<p>ICT Requests: <strong id="ictCount">0</strong></p>
+<p>Account Requests: <strong id="accountCount">0</strong></p>
+<p>Upload Requests: <strong id="uploadCount">0</strong></p>
+
+<p>Peak Usage Time: <strong id="peakTime">-</strong></p>
+</div>
+
+
+<!-- 🚨 INCIDENT TRACKING -->
+<div class="section">
+<h2>Incident & Issue Tracking</h2>
+
+<input type="text" id="incident" placeholder="Issue (e.g. Upload Error)">
+<input type="text" id="rootCause" placeholder="Root Cause">
+
+<button class="btn" onclick="logIncident()">Log Issue</button>
+
+<ul id="incidentList"></ul>
+</div>
+
+
+<script>
+let records = [];
+
+function addRecord() {
+    const service = document.getElementById("serviceName").value;
+    const desc = document.getElementById("description").value;
+    const date = document.getElementById("datetime").value;
+    const status = document.getElementById("status").value;
+    const priority = document.getElementById("priority").value;
+
+    const table = document.getElementById("ticketTable");
+
+    const row = table.insertRow();
+
+    row.innerHTML = `
+        <td>${service}</td>
+        <td>${desc}</td>
+        <td>${date}</td>
+        <td class="${status.toLowerCase()}">${status}</td>
+        <td class="${priority.toLowerCase()}">${priority}</td>
+    `;
+
+    records.push({service, date});
+
+    updateAnalytics();
+}
+
+function updateAnalytics() {
+    let ict = 0, acc = 0, upload = 0;
+    let hours = {};
+
+    records.forEach(r => {
+        if (r.service.toLowerCase().includes("ict")) ict++;
+        if (r.service.toLowerCase().includes("account")) acc++;
+        if (r.service.toLowerCase().includes("upload")) upload++;
+
+        let hour = new Date(r.date).getHours();
+        hours[hour] = (hours[hour] || 0) + 1;
+    });
+
+    document.getElementById("ictCount").innerText = ict;
+    document.getElementById("accountCount").innerText = acc;
+    document.getElementById("uploadCount").innerText = upload;
+
+    let peak = Object.keys(hours).reduce((a, b) => hours[a] > hours[b] ? a : b, 0);
+    document.getElementById("peakTime").innerText = peak + ":00";
+}
+
+function logIncident() {
+    const issue = document.getElementById("incident").value;
+    const cause = document.getElementById("rootCause").value;
+
+    const li = document.createElement("li");
+    li.textContent = issue + " - Cause: " + cause;
+
+    document.getElementById("incidentList").appendChild(li);
+}
+</script>
+
+</body>
+</html>
